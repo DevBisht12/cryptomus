@@ -67,9 +67,9 @@ const PlaceOrderScreen = () => {
         }
 
         const responseData = await response.json();
-        
+        console.log(responseData);
         if (responseData && responseData.payLink) {
-            
+            console.log(responseData.payLink);
             window.location.href = responseData.payLink;
         }
     } catch (error) {

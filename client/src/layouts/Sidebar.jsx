@@ -58,35 +58,7 @@ const Sidebar = () => {
               )}
             </div>
           </div>
-          <ul className="hidden lg:block space-y-2">
-            <li>
-              <a
-                href="https://twitter.com/mmdrz003"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <AiOutlineTwitter className="w-5 h-5 hover:scale-110" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://github.com/mohammadrz003"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <AiOutlineGithub className="w-5 h-5 hover:scale-110" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.instagram.com/moonfo_dev/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <AiOutlineInstagram className="w-5 h-5 hover:scale-110" />
-              </a>
-            </li>
-          </ul>
+
         </div>
       </div>
       {menuIsShown && (
