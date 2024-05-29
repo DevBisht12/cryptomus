@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { redirect } from "react-router-dom";
 import CheckoutSteps from "../../components/cart/CheckoutSteps";
 import Alert from "../../components/Alert";
 import Layout from "../../layouts/Layout";
@@ -33,26 +33,49 @@ const PlaceOrderScreen = () => {
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
 
-  useEffect(() => {
-    if (success) {
-      navigate(`/order/${order._id}`);
-    }
-    // eslint-disable-next-line
-  }, [success, navigate]);
+  // useEffect(() => {
+  //   if (success) {
+  //     navigate(`/order/${order._id}`);
+  //   // }
+  //   // eslint-disable-next-line
+  // }, [success, navigate]);
 
-  const placeOrderHandler = () => {
-    dispatch(
-      createOrder({
-        orderItems: cart.cartItems,
-        shippingAddress,
-        paymentMethod,
-        itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice,
-      })
-    );
-  };
+
+  const placeOrderHandler = async () => {
+    try {
+        const response = await fetch("https://api.oxapay.com/merchants/request", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                merchant: 'M80VUU-PN3YRU-XF01HL-KCB2K8',
+                amount: totalPrice, 
+                currency: 'USD',
+                lifeTime: 15,
+                feePaidByPayer: 0,
+                underPaidCover: 2.5,
+                returnUrl: 'https://example.com/success',
+                description: 'Order #12345',
+                orderId: 'ORD-12345',
+                callbackUrl: 'https://example.com/callback' 
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        console.log(responseData);
+        if (responseData && responseData.payLink) {
+            console.log(responseData.payLink);
+            window.location.href = responseData.payLink;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
 
   return (
     <Layout>
