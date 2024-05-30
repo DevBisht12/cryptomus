@@ -54,7 +54,7 @@ const PlaceOrderScreen = () => {
                 lifeTime: 15,
                 feePaidByPayer: 0,
                 underPaidCover: 2.5,
-                returnUrl: 'https://example.com/success',
+                returnUrl: 'https://cryptomus-frontend.onrender.com',
                 description: 'Order #12345',
                 orderId: 'ORD-12345',
                 callbackUrl: 'https://example.com/callback' 
