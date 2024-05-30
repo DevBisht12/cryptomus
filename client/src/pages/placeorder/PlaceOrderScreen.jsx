@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { redirect } from "react-router-dom";
 import CheckoutSteps from "../../components/cart/CheckoutSteps";
 import Alert from "../../components/Alert";
 import Layout from "../../layouts/Layout";
@@ -49,7 +48,7 @@ const PlaceOrderScreen = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                merchant: 'M80VUU-PN3YRU-XF01HL-KCB2K8',
+                merchant: 'sandbox',
                 amount: totalPrice, 
                 currency: 'USD',
                 lifeTime: 15,
@@ -61,13 +60,10 @@ const PlaceOrderScreen = () => {
                 callbackUrl: 'https://example.com/callback' 
             })
         });
-
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const responseData = await response.json();
-        console.log(responseData);
         if (responseData && responseData.payLink) {
             console.log(responseData.payLink);
             window.location.href = responseData.payLink;
@@ -196,3 +192,4 @@ const PlaceOrderScreen = () => {
 };
 
 export default PlaceOrderScreen;
+
